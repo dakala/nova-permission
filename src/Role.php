@@ -29,7 +29,7 @@ class Role extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -37,7 +37,7 @@ class Role extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'name', 'title',
     ];
 
     /**
@@ -48,6 +48,9 @@ class Role extends Resource
     public static $with = [
         'permissions',
     ];
+    
+    // dakala
+    public static $orderBy = ['id' => 'asc'];
 
     public static function getModel()
     {
@@ -102,6 +105,8 @@ class Role extends Resource
         return [
             ID::make()->sortable(),
 
+            Text::make('Title'),
+            
             Text::make(__('nova-permission-tool::roles.name'), 'name')
                 ->rules(['required', 'string', 'max:255'])
                 ->creationRules('unique:'.config('permission.table_names.roles'))

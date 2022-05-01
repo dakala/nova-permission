@@ -52,6 +52,18 @@ class Permission extends Resource
     // dakala
     public static $orderBy = ['id' => 'asc'];
     
+    // @dakala
+    protected static function applyOrderings($query, array $orderings)
+    {
+        if (empty($orderings) && property_exists(static::class, 'orderBy')) {
+            $query->reorder();
+
+            $orderings = static::$orderBy;
+        }
+
+        return parent::applyOrderings($query, $orderings);
+    }
+    
     public static function getModel()
     {
         return app(PermissionRegistrar::class)->getPermissionClass();

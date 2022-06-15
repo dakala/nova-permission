@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\MorphToMany;
 use Spatie\Permission\PermissionRegistrar;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Ijed\ActionButton\ActionButton;
 
 class Role extends Resource
 {
@@ -52,7 +53,7 @@ class Role extends Resource
     // dakala
     public static $orderBy = ['id' => 'asc'];
     
-    // @dakala
+    // dakala
     protected static function applyOrderings($query, array $orderings)
     {
         if (empty($orderings) && property_exists(static::class, 'orderBy')) {
@@ -147,7 +148,13 @@ class Role extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        // dakala
+        return [
+            (new ActionButton)
+                ->linkText('Permissions')
+                ->linkTextShort('Permissions')
+                ->linkUrl('/backend/resources/permissions'),
+        ];
     }
 
     /**
